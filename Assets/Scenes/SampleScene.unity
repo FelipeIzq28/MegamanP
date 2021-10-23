@@ -4449,13 +4449,25 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 0}
     m_Modifications:
+    - target: {fileID: 501819692640072865, guid: 92502cf62fecdce45a4de4f4c5de020f, type: 3}
+      propertyPath: m_Layer
+      value: 7
+      objectReference: {fileID: 0}
     - target: {fileID: 702495368319493041, guid: 92502cf62fecdce45a4de4f4c5de020f, type: 3}
       propertyPath: m_Icon
       value: 
       objectReference: {fileID: 0}
+    - target: {fileID: 702495368319493041, guid: 92502cf62fecdce45a4de4f4c5de020f, type: 3}
+      propertyPath: m_Layer
+      value: 7
+      objectReference: {fileID: 0}
     - target: {fileID: 5403952091395782707, guid: 92502cf62fecdce45a4de4f4c5de020f, type: 3}
       propertyPath: m_Name
       value: megaman_7
+      objectReference: {fileID: 0}
+    - target: {fileID: 5403952091395782707, guid: 92502cf62fecdce45a4de4f4c5de020f, type: 3}
+      propertyPath: m_Layer
+      value: 7
       objectReference: {fileID: 0}
     - target: {fileID: 5403952091395782708, guid: 92502cf62fecdce45a4de4f4c5de020f, type: 3}
       propertyPath: misPies
@@ -4465,6 +4477,10 @@ PrefabInstance:
       propertyPath: dashForce
       value: 20
       objectReference: {fileID: 0}
+    - target: {fileID: 5403952091395782708, guid: 92502cf62fecdce45a4de4f4c5de020f, type: 3}
+      propertyPath: firePoint
+      value: 
+      objectReference: {fileID: 5403952092014978162}
     - target: {fileID: 5403952091395782708, guid: 92502cf62fecdce45a4de4f4c5de020f, type: 3}
       propertyPath: jumpForce
       value: 30
@@ -4481,6 +4497,10 @@ PrefabInstance:
       propertyPath: groundCheck
       value: 
       objectReference: {fileID: 5403952092014978161}
+    - target: {fileID: 5403952091395782708, guid: 92502cf62fecdce45a4de4f4c5de020f, type: 3}
+      propertyPath: bulletPrefab
+      value: 
+      objectReference: {fileID: 2183942057227600706, guid: 247acb70f42b5eb4d9fb71e60b47bdf7, type: 3}
     - target: {fileID: 5403952091395782708, guid: 92502cf62fecdce45a4de4f4c5de020f, type: 3}
       propertyPath: groundCheckRadius
       value: 0.1
@@ -4538,5 +4558,10 @@ PrefabInstance:
 --- !u!4 &5403952092014978161 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 2951797082822551196, guid: 92502cf62fecdce45a4de4f4c5de020f, type: 3}
+  m_PrefabInstance: {fileID: 5403952092014978160}
+  m_PrefabAsset: {fileID: 0}
+--- !u!4 &5403952092014978162 stripped
+Transform:
+  m_CorrespondingSourceObject: {fileID: 7396512026902522881, guid: 92502cf62fecdce45a4de4f4c5de020f, type: 3}
   m_PrefabInstance: {fileID: 5403952092014978160}
   m_PrefabAsset: {fileID: 0}

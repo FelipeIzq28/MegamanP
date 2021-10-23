@@ -10,6 +10,8 @@ public class Player : MonoBehaviour
     [SerializeField] float dashForce;
     [SerializeField] BoxCollider2D floorPoint;
     [SerializeField] BoxCollider2D personaje;
+    [SerializeField] Transform firePoint;
+    [SerializeField] GameObject bulletPrefab;
     // Start is called before the first frame update
 
     float longDash = 15;
@@ -17,13 +19,20 @@ public class Player : MonoBehaviour
     Vector2 _movement;
     Rigidbody2D  _rigibody;
     BoxCollider2D myCollider;
+    public float direccionBullet;
 
     float duracion = 0;
-    float dashRate = 1;
+    float dashRate = 0.7f;
+
+    float duracionDisp = 0;
+    float fireRate = 1;
+
 
     bool isDashing = false;
     bool facingRight = true;
     bool dobleSalto = false;
+
+   
 
     private void Awake()
     {
@@ -39,7 +48,8 @@ public class Player : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        if(isDashing == false)
+        direccionBullet = transform.localScale.x;
+        if (isDashing == false)
         {
             float direccion = Input.GetAxisRaw("Horizontal");
             if (direccion < 0 && facingRight == true)
@@ -51,18 +61,18 @@ public class Player : MonoBehaviour
                 Flip();
             }
         }                      
-            Correr();
-            Caer();
-            Dash();
+        Correr();
+        Caer();
+        Dash();
         Saltar();
-        
-            
-            
-       
+        Disparar();
+
+    
     }
 
     private void LateUpdate()
     {
+        
         if (myAnimator.GetCurrentAnimatorStateInfo(0).IsTag("Dash"))
         {
             isDashing = true;
@@ -74,7 +84,41 @@ public class Player : MonoBehaviour
 
         }
     }
+    void Disparar()
+    {
 
+        float direccion = transform.localScale.x; ;
+
+        if (Input.GetKeyDown(KeyCode.Z) && Time.time >= duracionDisp)
+        {
+            duracionDisp = Time.time + fireRate;
+            myAnimator.SetLayerWeight(1, 1);
+           GameObject bullet = Instantiate(bulletPrefab, firePoint.position, transform.rotation) as GameObject;
+            Bullet bulletC = bullet.GetComponent<Bullet>();
+            bulletC.direction = direccion;
+
+
+        }
+        if(Time.time >= duracionDisp)
+        {
+            myAnimator.SetLayerWeight(1, 0);
+            
+        }
+    }
+    void Shoot()
+    {
+        GameObject myBullet = Instantiate(bulletPrefab, firePoint.position, Quaternion.identity) as GameObject;
+        Bullet bulletComponent = myBullet.GetComponent<Bullet>();
+        if (personaje.transform.localScale.x < 0f)
+        {
+            //Bala hacia la Izquierda
+            //bulletComponent.direction = Vector2.left;
+        }
+        else
+        {
+            //bulletComponent.direction = Vector2.right;
+        }
+    }
 
 
     void Correr()
@@ -191,20 +235,7 @@ public class Player : MonoBehaviour
         }
 
     }
-    void DobleSalto()
-    {
-        if (dobleSalto == true && isDashing == false)
-        {
-            myAnimator.SetBool("falling", false);
-            if (Input.GetKeyDown(KeyCode.Space))
-            {
-                _rigibody.AddForce(Vector2.up * jumpForce, ForceMode2D.Impulse);
-                myAnimator.SetTrigger("jumping");
-                dobleSalto = false;
-
-            }
-        }
-    }
+   
     void Flip()
     {
         facingRight = !facingRight;
