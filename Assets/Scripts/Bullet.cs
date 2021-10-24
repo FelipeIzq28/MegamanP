@@ -9,13 +9,17 @@ public class Bullet : MonoBehaviour
     public float direction;
     float _direccion;
     float speed = 30;
+    bool coll = false;
+    CapsuleCollider2D myCollider;
+
     private void Awake()
     {
         myAnimator = GetComponent<Animator>();
+        myCollider = GetComponent<CapsuleCollider2D>();
     }
     void Start()
     {
-        
+
     }
 
     // Update is called once per frame
@@ -23,12 +27,16 @@ public class Bullet : MonoBehaviour
     {
         _direccion = direction;
         transform.Translate(new Vector2(_direccion * Time.deltaTime * speed, 0));
+       
+        
     }
+
     private void OnCollisionEnter2D(Collision2D collision)
     {
-        if (collision.collider.IsTouchingLayers(LayerMask.GetMask("Ground")))
-         {
-            Destroy(this.gameObject);
-        }
+        myAnimator.SetTrigger("crash");                      
+        Destroy(this.gameObject, 0.1f);
+          
     }
+    
+
 }

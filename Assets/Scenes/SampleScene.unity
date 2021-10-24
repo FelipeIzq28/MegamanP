@@ -175,7 +175,7 @@ TilemapRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: 10754, guid: 0000000000000000f000000000000000, type: 0}
+  - {fileID: 2100000, guid: af9ab0cba7c49484ca25c98fe702f5d4, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -4500,7 +4500,7 @@ PrefabInstance:
     - target: {fileID: 5403952091395782708, guid: 92502cf62fecdce45a4de4f4c5de020f, type: 3}
       propertyPath: bulletPrefab
       value: 
-      objectReference: {fileID: 2183942057227600706, guid: 247acb70f42b5eb4d9fb71e60b47bdf7, type: 3}
+      objectReference: {fileID: 911767289682568866, guid: 247acb70f42b5eb4d9fb71e60b47bdf7, type: 3}
     - target: {fileID: 5403952091395782708, guid: 92502cf62fecdce45a4de4f4c5de020f, type: 3}
       propertyPath: groundCheckRadius
       value: 0.1

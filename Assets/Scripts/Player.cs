@@ -165,7 +165,7 @@ public class Player : MonoBehaviour
                     {
                         myAnimator.SetBool("falling", false);
                         myAnimator.SetTrigger("jumping");
-                        _rigibody.AddForce(Vector2.up * jumpForce, ForceMode2D.Impulse);
+                        _rigibody.AddForce(Vector2.up * (jumpForce/2), ForceMode2D.Impulse);
                        
                         dobleSalto = false;
                     }
