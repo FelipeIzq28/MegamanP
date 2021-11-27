@@ -5,6 +5,8 @@ TagManager:
   serializedVersion: 2
   tags:
   - Ground
+  - Bullet
+  - Enemy
   layers:
   - Default
   - TransparentFX
@@ -15,11 +17,11 @@ TagManager:
   - Ground
   - Player
   - Bullet
-  - 
-  - 
-  - 
-  - 
-  - 
+  - BulletT
+  - Enemigo
+  - BulletF1
+  - BulletF2
+  - Torreta
   - 
   - 
   - 

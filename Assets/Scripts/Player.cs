@@ -12,8 +12,13 @@ public class Player : MonoBehaviour
     [SerializeField] BoxCollider2D personaje;
     [SerializeField] Transform firePoint;
     [SerializeField] GameObject bulletPrefab;
+    [SerializeField] AudioClip sfx_bullet;
+    [SerializeField] AudioClip sfx_dash;
+    [SerializeField] AudioClip sfx_death;
+    [SerializeField] AudioClip sfx_jump;
+    [SerializeField] AudioClip sfx_landing;
     // Start is called before the first frame update
-
+    public bool gameOver = false;
     float longDash = 15;
     Animator myAnimator;
     Vector2 _movement;
@@ -32,7 +37,9 @@ public class Player : MonoBehaviour
     bool facingRight = true;
     bool dobleSalto = false;
 
-   
+    bool caer = false;
+
+    public bool gamePaused = false;
 
     private void Awake()
     {
@@ -49,23 +56,28 @@ public class Player : MonoBehaviour
     void Update()
     {
         direccionBullet = transform.localScale.x;
-        if (isDashing == false)
+        if(gamePaused == false)
         {
-            float direccion = Input.GetAxisRaw("Horizontal");
-            if (direccion < 0 && facingRight == true)
+            if (isDashing == false)
             {
-                Flip();
+                float direccion = Input.GetAxisRaw("Horizontal");
+                if (direccion < 0 && facingRight == true)
+                {
+                    Flip();
+                }
+                else if (direccion > 0 && facingRight == false)
+                {
+                    Flip();
+                }
             }
-            else if (direccion > 0 && facingRight == false)
-            {
-                Flip();
-            }
-        }                      
-        Correr();
-        Caer();
-        Dash();
-        Saltar();
-        Disparar();
+            Correr();
+            Caer();
+            Dash();
+            Saltar();
+            Disparar();
+        }
+        
+        
 
     
     }
@@ -93,6 +105,7 @@ public class Player : MonoBehaviour
         {
             duracionDisp = Time.time + fireRate;
             myAnimator.SetLayerWeight(1, 1);
+            AudioSource.PlayClipAtPoint(sfx_bullet, Camera.main.transform.position);
            GameObject bullet = Instantiate(bulletPrefab, firePoint.position, transform.rotation) as GameObject;
             Bullet bulletC = bullet.GetComponent<Bullet>();
             bulletC.direction = direccion;
@@ -140,7 +153,15 @@ public class Player : MonoBehaviour
         if(_rigibody.velocity.y < 0)
         {
             myAnimator.SetBool("falling", true);
+            caer = true;
         }
+        if(caer == true && _rigibody.velocity.y == 0)
+        {
+            AudioSource.PlayClipAtPoint(sfx_landing, Camera.main.transform.position);
+            caer = false;
+        }
+        
+        
     }
     void Saltar()
     {
@@ -151,10 +172,12 @@ public class Player : MonoBehaviour
             
             if (EnSuelo() && isDashing == false)
             {
+                AudioSource.PlayClipAtPoint(sfx_jump, Camera.main.transform.position);
                 myAnimator.SetBool("falling", false);
                 _rigibody.AddForce(Vector2.up * jumpForce, ForceMode2D.Impulse);
                 myAnimator.SetTrigger("jumping");
                 dobleSalto = true;
+
             }
             else
             {
@@ -172,19 +195,6 @@ public class Player : MonoBehaviour
                 }
             }
         }
-       
-  
-        //if (EnSuelo() && isDashing == false)
-        //{
-        //    myAnimator.SetBool("falling", false);
-        //    if (Input.GetKeyDown(KeyCode.Space))
-        //    {
-        //        _rigibody.AddForce(Vector2.up * jumpForce, ForceMode2D.Impulse);
-        //        myAnimator.SetTrigger("jumping");
-        //        dobleSalto = true;
-        //    }
-
-        //}
 
     }
     bool EnSuelo()
@@ -201,6 +211,7 @@ public class Player : MonoBehaviour
             myAnimator.SetBool("falling", false);
             if (Input.GetKey(KeyCode.X) && Time.time >= duracion)
             {
+                
                 isDashing = true;
                 longDash++;
                
@@ -224,11 +235,15 @@ public class Player : MonoBehaviour
                     isDashing = false;
 
                 }
-            } else
+            } else 
             {
                 _rigibody.velocity = new Vector2(0, _rigibody.velocity.y);
                 myAnimator.SetBool("isDashing", false);
                 isDashing = false;
+            }
+            if (Input.GetKeyDown(KeyCode.X))
+            {
+                AudioSource.PlayClipAtPoint(sfx_dash, Camera.main.transform.position);
             }
             
 
@@ -242,6 +257,16 @@ public class Player : MonoBehaviour
         float localScaleX = transform.localScale.x;
         localScaleX = localScaleX * -1;
         transform.localScale = new Vector3(localScaleX, transform.localScale.y, transform.localScale.z);
+    }
+    private void OnCollisionEnter2D(Collision2D collision)
+    {
+        GameObject colision = collision.gameObject;
+        if (colision.tag != "Ground")
+        {
+            AudioSource.PlayClipAtPoint(sfx_death, Camera.main.transform.position);
+            Destroy(this.gameObject);
+            gameOver = true;
+        }
     }
 
 }
