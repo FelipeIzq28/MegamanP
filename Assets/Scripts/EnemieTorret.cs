@@ -39,7 +39,7 @@ public class EnemieTorret : MonoBehaviour
             }
         }
         
-        Collider2D chocando = Physics2D.OverlapCircle(transform.position, 10, LayerMask.GetMask("Player"));
+        Collider2D chocando = Physics2D.OverlapCircle(transform.position, 11, LayerMask.GetMask("Player"));
         if (chocando && activo == true)
         {
             Shoot();
@@ -48,7 +48,7 @@ public class EnemieTorret : MonoBehaviour
     }
     private void OnDrawGizmos()
     {
-        Gizmos.DrawWireSphere(transform.position, 10);
+        Gizmos.DrawWireSphere(transform.position, 11);
     }
     private void OnTriggerEnter2D(Collider2D collision)
     {

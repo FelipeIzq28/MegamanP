@@ -11,7 +11,7 @@ public class EnemieTorret2 : MonoBehaviour
     [SerializeField] AudioClip sfx_enemieDeath;
     [SerializeField] GameManager gm;
     float nextFire;
-    float fireRate = 1;
+    float fireRate = 2;
     bool active = true;
     Animator myAnimator;
     // Start is called before the first frame update
@@ -27,7 +27,7 @@ public class EnemieTorret2 : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        Collider2D chocando = Physics2D.OverlapCircle(transform.position, 10, LayerMask.GetMask("Player"));
+        Collider2D chocando = Physics2D.OverlapCircle(transform.position, 14, LayerMask.GetMask("Player"));
         if(chocando && active == true)
         {
             Shoot();
@@ -37,7 +37,7 @@ public class EnemieTorret2 : MonoBehaviour
     }
     private void OnDrawGizmos()
     {
-        Gizmos.DrawWireSphere(transform.position, 10);
+        Gizmos.DrawWireSphere(transform.position, 14);
     }
     void Shoot()
     {
